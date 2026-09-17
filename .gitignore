@@ -1,0 +1,29 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Node / Electron
+node_modules/
+build/
+dist/
+
+# User data (local runtime output, not source)
+uploads/
+output/
+
+# App state
+*.log
+.env
+
+# AI tooling scaffold (not part of the shipped product)
+.agent/
+.claude-flow/
+.claude/
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!-- Arkana Book Writer — support: buymeacoffee.com/re_code | USDC (Solana): 4qroECsHYTqk7Sda412LiiXofuMj5xhYRHmrKqXbKM8X | contact: contact@rewebfolio.xyz -->
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkana Book Writer</title>
+    <link rel="icon" type="image/png" href="/static/assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/theme.css">
+</head>
+
+<body class="deep-slate">
+    <!-- Splash Screen -->
+    <div id="splash-overlay">
+        <div class="splash-content">
+            <div class="splash-logo">✨</div>
+            <h1 class="splash-title">ARKANA</h1>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-app">
+        <!-- Floating Sidebar -->
+        <aside class="floating-sidebar">
+            <div class="sidebar-header">
+                <img src="https://img.icons8.com/clouds/100/book.png" alt="Logo" class="sidebar-logo">
+                <span class="sidebar-brand">Arkana</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-step="1">
+                    <span class="nav-icon">📥</span>
+                    <span class="nav-label" data-i18n="nav.import">Importar</span>
+                </button>
+                <button class="nav-item" data-step="2">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-label" data-i18n="nav.style">Estilo</span>
+                </button>
+                <button class="nav-item" data-step="3">
+                    <span class="nav-icon">✍️</span>
+                    <span class="nav-label" data-i18n="nav.edit">Editar</span>
+                </button>
+                <button class="nav-item" data-step="4">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label" data-i18n="nav.settings">Ajustes</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-item btn-support" onclick="openDonationModal()">
+                    <span class="nav-icon">💛</span>
+                    <span class="nav-label" data-i18n="donate.navLabel">Apoiar o Projeto</span>
+                </button>
+                <button class="nav-item btn-new-session" onclick="startNewSession()">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-label" data-i18n="nav.newSession">Nova Sessão</span>
+                </button>
+                <button class="nav-item btn-danger" onclick="shutdownApp()">
+                    <span class="nav-icon">🚨</span>
+                    <span class="nav-label" data-i18n="nav.shutdown">Encerrar App</span>
+                </button>
+                <div class="version-badge">v1.5.0</div>
+            </div>
+        </aside>
+
+        <!-- Donation / Support Modal -->
+        <div id="donation-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-glass donation-modal-glass">
+                <div class="modal-header">
+                    <h2 data-i18n="donate.title">💛 Apoie o Arkana Book Writer</h2>
+                    <button class="btn-icon" onclick="closeDonationModal()">✖</button>
+                </div>
+                <div class="modal-body">
+                    <p data-i18n="donate.blurb">
+                        O Arkana é gratuito, local e sem rastreamento — não vendemos o software.
+                        Se ele te ajudou a publicar seu e-book, considere apoiar quem mantém o projeto.
+                    </p>
+
+                    <label data-i18n="donate.bmcLabel">Buy Me a Coffee</label>
+                    <a class="btn-glass btn-primary donation-link" href="https://buymeacoffee.com/re_code"
+                       target="_blank" rel="noopener noreferrer">☕ buymeacoffee.com/re_code</a>
+
+                    <label data-i18n="donate.solanaLabel">USDC (rede Solana)</label>
+                    <div class="donation-wallet-row">
+                        <code id="donation-wallet-sol" class="donation-wallet">4qroECsHYTqk7Sda412LiiXofuMj5xhYRHmrKqXbKM8X</code>
+                        <button class="btn-glass-small" onclick="copyWalletAddress('donation-wallet-sol')" data-i18n="donate.copy">Copiar</button>
+                    </div>
+
+                    <label data-i18n="donate.btcLabel">BTC (rede Bitcoin)</label>
+                    <div class="donation-wallet-row">
+                        <code id="donation-wallet-btc" class="donation-wallet">bc1puezkfpq7eea6whzrh68qmhvw9gmxynwpe8mr5w509ycqcn3y64hq9ywjrn</code>
+                        <button class="btn-glass-small" onclick="copyWalletAddress('donation-wallet-btc')" data-i18n="donate.copy">Copiar</button>
+                    </div>
+
+                    <label data-i18n="donate.contactLabel">Parcerias / Contato</label>
+                    <a class="donation-contact" href="mailto:contact@rewebfolio.xyz">contact@rewebfolio.xyz</a>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-glass" onclick="closeDonationModal()" data-i18n="donate.close">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Workspace -->
+        <main class="workspace-area">
+            <header class="workspace-header">
+                <h2 id="step-title" data-i18n="step.title.1">Workspace Inicial</h2>
+
+                <!-- Stats Bar -->
+                <div class="stats-bar" id="stats-bar">
+                    <span class="stat-item" id="stat-words" data-i18n-title="stat.words.title" title="Palavras">📝 0</span>
+                    <span class="stat-item" id="stat-pages" data-i18n-title="stat.pages.title" title="Páginas estimadas">📄 0</span>
+                    <span class="stat-item" id="stat-time" data-i18n-title="stat.time.title" title="Tempo de leitura">⏱️ 0 min</span>
+                    <span class="stat-item save-status" id="save-status" data-i18n="save.ready">💾 Pronto</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn-glass secondary" id="btn-toggle-preview" data-i18n="header.preview">Preview 👁️</button>
+                    <button class="btn-glass primary" id="btn-next" data-i18n="header.next.default">Prosseguir 🚀</button>
+                </div>
+            </header>
+
+            <div class="workspace-main-flex">
+                <div class="workspace-content-container">
+                    <section id="workspace-content" class="content-fade">
+                        <!-- Content will be injected via JS -->
+                        <div class="hero-section">
+                            <h1 class="hero-glow" data-i18n="hero.title">Seu Manuscrito, Elevado.</h1>
+                            <p class="hero-sub" data-i18n="hero.sub">Transforme rascunhos em obras de arte com a fluidez do Arkana Book Writer.</p>
+
+                            <div class="upload-container" id="drop-zone">
+                                <div class="upload-glass">
+                                    <div class="upload-icon">✨</div>
+                                    <h3 data-i18n="upload.title">Arraste seu arquivo aqui</h3>
+                                    <p data-i18n="upload.sub">PDF, DOCX ou Markdown</p>
+                                    <input type="file" id="file-input" accept=".pdf,.docx,.md,.markdown" hidden>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- LIVE PREVIEW PANEL -->
+                <aside class="live-preview-panel" id="live-preview-panel">
+                    <div class="preview-header">
+                        <h3 data-i18n="preview.title">Visualização Real</h3>
+                        <button class="btn-icon" onclick="togglePreview()">✖</button>
+                    </div>
+                    <iframe id="preview-frame" class="preview-frame"></iframe>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/i18n.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "arkana_book_writer",
+  "version": "1.5.0",
+  "description": "Arkana Book Writer é uma ferramenta profissional local para criação de e-books em PDF e EPUB a partir de documentos Word (.docx), PDF e Markdown (.md).",
+  "main": "desktop/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac"
+  },
+  "keywords": ["ebook", "epub", "pdf", "publishing", "electron", "local-first"],
+  "author": "Arkana Project",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^40.1.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.arkana.bookwriter",
+    "productName": "Arkana Book Writer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "static/**/*",
+      "templates/**/*",
+      "core/**/*",
+      "web_app.py",
+      "requirements.txt"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "static/assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity"
+    }
+  }
+}
